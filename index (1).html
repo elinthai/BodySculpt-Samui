@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Sculpt Samui — 3D Body Scanning & Personal Training, Koh Samui</title>
+  <meta name="description" content="The first and only non-BIA 3D body composition scanner on Koh Samui. See your body fat, muscle & bone data in 35 seconds. Book a scan from ฿1,500." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --off-white: #f5f4f0;
+      --border: rgba(10,10,10,0.12); --accent: #c8f04a; --accent-dark: #a8d22e;
+      --text: #0a0a0a; --text-muted: #5a5956; --radius: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-size: 13px; color: var(--text-muted); }
+    .nav-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--accent); color: var(--black); font-size: 13px; font-weight: 500; padding: 9px 20px; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--accent-dark); }
+    .nav-mobile-hide { display: flex; }
+
+    /* PROMO BANNER */
+    .promo-banner { background: var(--accent); padding: 1rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; text-align: center; }
+    .promo-banner-text { font-size: 14px; font-weight: 500; color: var(--black); }
+    .promo-banner-text span { font-weight: 400; opacity: 0.75; }
+    .promo-btn { font-size: 12px; font-weight: 600; padding: 7px 16px; background: var(--black); color: var(--white); border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; white-space: nowrap; letter-spacing: 0.03em; }
+
+    /* HERO */
+    .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 2rem 4rem; background: var(--black); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(160deg, #111 0%, #1a1a1a 60%, #0f1a06 100%); }
+    .hero-grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,240,74,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,240,74,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(200,240,74,0.3); padding: 5px 14px; border-radius: 99px; margin-bottom: 2rem; }
+    .hero-tag-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(42px, 7vw, 88px); font-weight: 700; line-height: 0.95; color: var(--white); letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 500px; line-height: 1.65; margin-bottom: 1rem; }
+    .hero-proof { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 2.5rem; letter-spacing: 0.02em; }
+    .hero-proof strong { color: var(--accent); font-weight: 500; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+    /* BUTTONS */
+    .btn-accent { background: var(--accent); color: var(--black); font-size: 14px; font-weight: 500; padding: 13px 28px; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.1s; }
+    .btn-accent:hover { background: var(--accent-dark); }
+    .btn-accent:active { transform: scale(0.98); }
+    .btn-ghost { background: transparent; color: rgba(255,255,255,0.65); font-size: 14px; padding: 13px 28px; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+    .btn-dark { background: var(--black); color: var(--white); font-size: 14px; font-weight: 500; padding: 13px 28px; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; }
+    .btn-dark:hover { opacity: 0.85; }
+    .btn-outline-dark { background: transparent; color: var(--text); font-size: 14px; padding: 13px 28px; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
+    .btn-outline-dark:hover { border-color: var(--black); }
+
+    /* STATS STRIP */
+    .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+    .stat { padding: 2rem 1.5rem; border-right: 1px solid var(--border); text-align: center; }
+    .stat:last-child { border-right: none; }
+    .stat-number { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; }
+
+    /* ONLY STRIP */
+    .only-strip { background: var(--black); padding: 2.5rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
+    .only-strip p { font-family: 'Syne', sans-serif; font-size: clamp(15px, 2.5vw, 20px); font-weight: 600; color: var(--white); max-width: 720px; margin: 0 auto; line-height: 1.4; }
+    .only-strip p em { font-style: normal; color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .section-lead { font-size: 17px; color: var(--text-muted); max-width: 580px; line-height: 1.7; margin-bottom: 3rem; }
+
+    /* JOURNEY */
+    .journey-section { background: var(--off-white); }
+    .journey-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; margin-top: 3rem; }
+    .journey-step { padding: 2rem 1.75rem; background: var(--white); border: 1px solid var(--border); border-right: none; position: relative; }
+    .journey-step:last-child { border-right: 1px solid var(--border); }
+    .journey-step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .journey-step:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .journey-step.active { background: var(--black); }
+    .journey-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+    .journey-step.active .journey-num { color: var(--accent); }
+    .journey-icon { font-size: 28px; margin-bottom: 1rem; line-height: 1; }
+    .journey-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
+    .journey-step.active .journey-title { color: var(--white); }
+    .journey-body { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .journey-step.active .journey-body { color: rgba(255,255,255,0.5); }
+    .journey-detail { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .journey-step.active .journey-detail { border-top-color: rgba(255,255,255,0.1); }
+    .journey-detail-item { font-size: 12px; color: var(--text-muted); padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
+    .journey-step.active .journey-detail-item { color: rgba(255,255,255,0.4); }
+    .journey-detail-item::before { content: '&#x2192;'; flex-shrink: 0; color: var(--accent); font-weight: 600; }
+    .journey-arrow { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); z-index: 2; width: 28px; height: 28px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--black); }
+    .journey-step:last-child .journey-arrow { display: none; }
+
+    /* STYKU */
+    .styku-intro { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start; margin-bottom: 2.5rem; }
+    .styku-scanner-visual img { border-radius: var(--radius); display: block; }
+    .styku-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .styku-cell { background: var(--white); padding: 2rem; }
+    .styku-cell-accent { background: var(--black); }
+    .styku-cell-accent .styku-cell-title { color: var(--white); }
+    .styku-cell-accent .styku-cell-body { color: rgba(255,255,255,0.5); }
+    .styku-cell-accent .styku-cell-num { color: var(--accent); }
+    .styku-cell-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .styku-cell-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+    .styku-cell-body { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .styku-data-row { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .styku-data-card img { border-radius: var(--radius); display: block; max-width: 100%; height: auto; }
+
+    /* SCAN SHOWCASE */
+    .scan-showcase { background: var(--off-white); }
+    .showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 0; }
+    .showcase-card { background: var(--white); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+    .showcase-img-wrap { background: var(--off-white); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .showcase-img-wrap img { display: block; max-width: 100%; height: auto; }
+    .showcase-caption { padding: 1.75rem; }
+    .showcase-caption-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 0.75rem; }
+    .showcase-caption-body { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+    /* PACKAGES */
+    .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1px; }
+    .packages-grid-bottom { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .pkg { background: var(--white); padding: 2rem; display: flex; flex-direction: column; }
+    .pkg.featured { background: var(--black); }
+    .pkg.collab { background: #0f1a06; }
+    .pkg-icon { font-size: 24px; margin-bottom: 1.25rem; line-height: 1; }
+    .pkg-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; margin-bottom: 1rem; width: fit-content; }
+    .pkg-badge-accent { background: var(--accent); color: var(--black); }
+    .pkg-badge-green { background: rgba(200,240,74,0.15); color: var(--accent); border: 1px solid rgba(200,240,74,0.3); }
+    .pkg-badge-muted { background: var(--off-white); color: var(--text-muted); }
+    .pkg-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .pkg.featured .pkg-name, .pkg.collab .pkg-name { color: var(--white); }
+    .pkg-tagline { font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 1rem; line-height: 1.5; }
+    .pkg.featured .pkg-tagline, .pkg.collab .pkg-tagline { color: rgba(255,255,255,0.4); }
+    .pkg-price { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .pkg.featured .pkg-price, .pkg.collab .pkg-price { color: var(--accent); }
+    .pkg-unit { font-size: 12px; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .pkg.featured .pkg-unit, .pkg.collab .pkg-unit { color: rgba(255,255,255,0.35); }
+    .pkg-includes { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .pkg.featured .pkg-includes, .pkg.collab .pkg-includes { color: rgba(255,255,255,0.3); }
+    .pkg-items { list-style: none; flex: 1; }
+    .pkg-items li { font-size: 13px; color: var(--text-muted); padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+    .pkg.featured .pkg-items li, .pkg.collab .pkg-items li { color: rgba(255,255,255,0.5); }
+    .pkg-items li::before { content: '&#x2713;'; color: var(--accent); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+    .pkg-cta { display: block; width: 100%; margin-top: 1.75rem; padding: 12px; text-align: center; font-size: 14px; font-weight: 500; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: all 0.2s; }
+    .pkg-cta-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .pkg-cta-outline:hover { border-color: var(--black); }
+    .pkg-cta-accent { background: var(--accent); color: var(--black); border: none; }
+    .pkg-cta-accent:hover { background: var(--accent-dark); }
+    .pkg-cta-dark { background: var(--white); color: var(--black); border: none; }
+    .pkg-cta-dark:hover { background: rgba(255,255,255,0.85); }
+    .pkg-footnote { font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 1.5rem; }
+
+    /* TESTIMONIALS */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+    .testimonial { background: var(--off-white); border-radius: var(--radius); padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+    .testimonial-stars { color: var(--accent); font-size: 14px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 14px; color: var(--text); line-height: 1.7; flex: 1; font-style: italic; }
+    .testimonial-author { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+    .reviews-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin-top: 2.5rem; padding: 2rem; background: var(--off-white); border-radius: var(--radius); }
+    .reviews-cta-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .reviews-cta-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .reviews-btn { white-space: nowrap; }
+
+    /* SERVICES */
+    .service-row { display: grid; grid-template-columns: 80px 1fr auto; align-items: start; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    .service-row:last-child { border-bottom: none; }
+    .service-index { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; padding-top: 3px; }
+    .service-name { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+    .service-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; max-width: 480px; }
+    .service-pill { font-size: 11px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 99px; color: var(--text-muted); white-space: nowrap; align-self: flex-start; }
+
+    /* YOGA STRIP */
+    .yoga-strip { background: var(--off-white); border-radius: var(--radius); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin-top: 3rem; }
+    .yoga-strip h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .yoga-strip p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* HOTEL */
+    .hotel-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .hotel-text p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .hotel-partners { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+    .hotel-partner-pill { font-size: 12px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 99px; color: var(--text-muted); background: var(--off-white); }
+    .hotel-features { list-style: none; }
+    .hotel-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-muted); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .hotel-features li:last-child { border-bottom: none; }
+    .hotel-features li::before { content: '&#x2192;'; color: var(--text); font-weight: 500; flex-shrink: 0; }
+    .hotel-callout { background: var(--black); border-radius: var(--radius); padding: 2.5rem; }
+    .hotel-callout-eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 500; }
+    .hotel-callout h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; color: var(--white); }
+    .hotel-callout p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 1.75rem; }
+    .hotel-callout .btn-accent { display: block; text-align: center; }
+
+    /* FAQ */
+    .faq-list { margin-top: 2.5rem; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-item summary { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; font-size: 15px; font-weight: 500; cursor: pointer; list-style: none; gap: 1rem; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-toggle { width: 20px; height: 20px; border-radius: 50%; background: var(--off-white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; transition: background 0.2s; }
+    .faq-item[open] .faq-toggle { background: var(--accent); border-color: var(--accent); }
+    .faq-toggle::after { content: '+'; line-height: 1; }
+    .faq-item[open] .faq-toggle::after { content: '&#x2212;'; }
+    .faq-body { font-size: 14px; color: var(--text-muted); line-height: 1.75; padding-bottom: 1.5rem; max-width: 620px; }
+
+    /* LOCATION */
+    .location-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+    .location-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .location-detail-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .location-detail-value { font-size: 15px; line-height: 1.6; }
+    .location-detail-value a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    .map-placeholder { background: var(--off-white); border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+    .map-placeholder-inner { text-align: center; color: var(--text-muted); }
+    .map-placeholder-inner span { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+    .map-placeholder-inner p { font-size: 13px; line-height: 1.6; }
+
+    /* CONTACT */
+    .contact-section { text-align: center; padding: 6rem 2rem; }
+    .contact-section .eyebrow { text-align: center; }
+    .contact-section p { font-size: 17px; color: var(--text-muted); max-width: 460px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .contact-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { padding: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* FLOATING WHATSAPP */
+    .whatsapp-float { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; display: none; align-items: center; gap: 8px; background: #25d366; color: var(--white); font-size: 13px; font-weight: 500; padding: 12px 18px; border-radius: 99px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+    .whatsapp-float:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+
+    /* MOBILE */
+    @media (max-width: 680px) {
+      nav { padding: 1rem; }
+      .nav-mobile-hide { display: none; }
+      .hero { padding: 0 1.25rem 3rem; min-height: 80vh; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      section { padding: 3.5rem 1.25rem; }
+      .styku-intro { grid-template-columns: 1fr; }
+      .styku-scanner-visual { display: none; }
+      .journey-steps { grid-template-columns: 1fr; }
+      .journey-step { border-right: 1px solid var(--border); border-bottom: none; border-radius: 0; }
+      .journey-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+      .journey-step:last-child { border-radius: 0 0 var(--radius) var(--radius); border-bottom: 1px solid var(--border); }
+      .journey-arrow { display: none; }
+      .styku-layout { grid-template-columns: 1fr; }
+      .showcase-grid { grid-template-columns: 1fr; }
+      .packages-grid, .packages-grid-bottom { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .reviews-cta { grid-template-columns: 1fr; }
+      .hotel-split { grid-template-columns: 1fr; gap: 2rem; }
+      .yoga-strip { grid-template-columns: 1fr; text-align: center; }
+      .service-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .service-index { display: none; }
+      .location-layout { grid-template-columns: 1fr; }
+      .whatsapp-float { display: flex; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-tag-dot { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">Body Sculpt Samui</span>
+    <ul class="nav-links nav-mobile-hide">
+      <li><a href="#journey">How it works</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#hotels">Hotels</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Styku%20scan" class="nav-cta" target="_blank" rel="noopener">Book a scan</a>
+  </nav>
+
+  <!-- PROMO BANNER -->
+  <div class="promo-banner">
+    <p class="promo-banner-text">&#x1F389; Celebrating 600 clients on Koh Samui &#8212; <span>Scan + Consultation for &#x0E3F;1,500 this month only (save &#x0E3F;500)</span></p>
+    <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20claim%20the%20600%20clients%20special%20-%20Scan%20%2B%20Consultation%20for%20%E0%B8%B11%2C500" class="promo-btn" target="_blank" rel="noopener">Claim offer &#x2192;</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Koh Samui &middot; Styku 3D Body Scanning
+      </div>
+      <h1>See your body.<br><em>Change</em> your body.</h1>
+      <p class="hero-sub">35 seconds. 400+ measurements. The most accurate body composition data available on Koh Samui &#8212; and a training path built around your numbers.</p>
+      <p class="hero-proof">Trusted by <strong>600+ clients</strong> across Koh Samui over 2 years.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Styku%20scan" class="btn-accent" target="_blank" rel="noopener">Book a scan from &#x0E3F;1,500</a>
+        <a href="#journey" class="btn-ghost">How it works</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-number">35s</div><div class="stat-label">Full body scan</div></div>
+    <div class="stat"><div class="stat-number">400+</div><div class="stat-label">Measurements captured</div></div>
+    <div class="stat"><div class="stat-number">600+</div><div class="stat-label">Clients scanned</div></div>
+    <div class="stat"><div class="stat-number">#1</div><div class="stat-label">Only non-BIA scanner on Samui</div></div>
+  </div>
+
+  <!-- ONLY ON SAMUI -->
+  <div class="only-strip">
+    <p>Body Sculpt Samui is the <em>first and only</em> commercially available non-BIA body composition consultancy on Koh Samui. Not BIA. Not BMI. <em>Medical-grade</em> infrared scanning combined with DEXA X-ray data &#8212; the most accurate body composition information on the island.</p>
+  </div>
+
+  <main>
+
+  <!-- JOURNEY FLOW -->
+  <section id="journey" class="journey-section">
+    <div class="section-inner">
+      <p class="eyebrow">How it works</p>
+      <h2>The scan is the door.<br>Training is the destination.</h2>
+      <p class="section-lead">Most people come in for a scan. They stay for the results. Here&#8217;s the path from not knowing to actually changing.</p>
+      <div class="journey-steps">
+        <div class="journey-step active">
+          <div class="journey-num">Step 01</div>
+          <div class="journey-icon">&#x2B21;</div>
+          <div class="journey-title">Scan</div>
+          <div class="journey-body">35 seconds on the Styku platform. Infrared sensors map your entire body and cross-reference with DEXA X-ray data.</div>
+          <div class="journey-detail">
+            <div class="journey-detail-item">400+ body measurements</div>
+            <div class="journey-detail-item">Body fat % and lean mass</div>
+            <div class="journey-detail-item">3D rotating body avatar</div>
+            <div class="journey-detail-item">Full circumference data</div>
+          </div>
+          <div class="journey-arrow">&#x2192;</div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">Step 02</div>
+          <div class="journey-icon">&#x1F4CA;</div>
+          <div class="journey-title">Understand</div>
+          <div class="journey-body">Your PDF report lands in your inbox. Add a consultation and a coach walks you through every number and sets your direction.</div>
+          <div class="journey-detail">
+            <div class="journey-detail-item">Full report emailed instantly</div>
+            <div class="journey-detail-item">Expert consultation (+&#x0E3F;500)</div>
+            <div class="journey-detail-item">Goal-setting around your data</div>
+            <div class="journey-detail-item">Training direction built for you</div>
+          </div>
+          <div class="journey-arrow">&#x2192;</div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">Step 03</div>
+          <div class="journey-icon">&#x1F3CB;&#xFE0F;</div>
+          <div class="journey-title">Train</div>
+          <div class="journey-body">Personal training sessions built directly from your scan data &#8212; not a generic programme. Every session targets what your numbers showed.</div>
+          <div class="journey-detail">
+            <div class="journey-detail-item">Scan-programmed PT sessions</div>
+            <div class="journey-detail-item">Body sculpting focus</div>
+            <div class="journey-detail-item">Nutrition guidance available</div>
+            <div class="journey-detail-item">Progress tracked every session</div>
+          </div>
+          <div class="journey-arrow">&#x2192;</div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">Step 04</div>
+          <div class="journey-icon">&#x1F4C8;</div>
+          <div class="journey-title">Prove it</div>
+          <div class="journey-body">Rescan after your training block. Compare your 3D avatars side by side. See exactly what changed &#8212; not how you feel, but what the data shows.</div>
+          <div class="journey-detail">
+            <div class="journey-detail-item">Before &amp; after comparison</div>
+            <div class="journey-detail-item">Every measurement tracked</div>
+            <div class="journey-detail-item">Adjust programme from new data</div>
+            <div class="journey-detail-item">Measurable, undeniable results</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYKU SCIENCE -->
+  <section id="scan">
+    <div class="section-inner">
+      <div class="styku-intro">
+        <div class="styku-intro-text">
+          <p class="eyebrow">Styku 3D scanning</p>
+          <h2>Your body, measured &#8212; not guessed.</h2>
+          <p class="section-lead">A scale tells you one number. Styku tells you whether that number is fat, water, or muscle &#8212; and exactly where on your body. That&#8217;s the difference between a guess and a plan.</p>
+        </div>
+        <div class="styku-scanner-visual">
+          <img src="images/scanner-platform.png" alt="Woman standing on the Styku 3D body scanner platform during a 35-second scan" width="221" height="377" loading="lazy" />
+        </div>
+      </div>
+      <div class="styku-layout">
+        <div class="styku-cell styku-cell-accent">
+          <div class="styku-cell-num">400+</div>
+          <div class="styku-cell-title">Measurements per scan</div>
+          <div class="styku-cell-body">Waist, hips, arms, chest, thighs &#8212; every circumference and volume, captured automatically. Not estimated. Measured.</div>
+        </div>
+        <div class="styku-cell">
+          <div class="styku-cell-num">35s</div>
+          <div class="styku-cell-title">Time to complete a full scan</div>
+          <div class="styku-cell-body">Step on the platform, stand still, turn once. In 35 seconds you have a complete 3D body avatar and full composition breakdown.</div>
+        </div>
+        <div class="styku-cell">
+          <div class="styku-cell-num">&#x2260; BIA</div>
+          <div class="styku-cell-title">Not BIA. Not BMI. Not a scale.</div>
+          <div class="styku-cell-body">BIA sends electrical signals through your body and guesses. Styku uses infrared scanners and a DEXA X-ray database. Accuracy is not comparable.</div>
+        </div>
+        <div class="styku-cell styku-cell-accent">
+          <div class="styku-cell-num">PDF</div>
+          <div class="styku-cell-title">Your data, yours forever</div>
+          <div class="styku-cell-body">Full report emailed after every scan. Take it to any trainer, doctor, or nutritionist anywhere in the world. Your body data belongs to you.</div>
+        </div>
+      </div>
+      <div class="styku-data-row">
+        <div class="styku-data-card">
+          <img src="images/scan-data-light.png" alt="Styku report data cards showing body fat and lean mass percentage ratings" width="267" height="221" loading="lazy" />
+        </div>
+        <div class="styku-data-card">
+          <img src="images/scan-data-dark.png" alt="Styku dark-theme report showing fat mass and lean mass body composition data" width="361" height="310" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCAN SHOWCASE -->
+  <section id="showcase" class="scan-showcase">
+    <div class="section-inner">
+      <p class="eyebrow">What the report looks like</p>
+      <h2>See what the scanner gives you.</h2>
+      <p class="section-lead">Every appointment ends with a full PDF report, a 3D avatar you can rotate and compare, and the clearest picture of your body you&#8217;ve ever had &#8212; in your inbox within minutes.</p>
+      <div class="showcase-grid">
+        <div class="showcase-card">
+          <div class="showcase-img-wrap">
+            <img src="images/scan-report-laptop.png" alt="Styku software on a laptop screen showing a 3D body wireframe with body composition measurements" width="263" height="449" loading="lazy" />
+          </div>
+          <div class="showcase-caption">
+            <div class="showcase-caption-title">Your 3D rotating body avatar</div>
+            <div class="showcase-caption-body">Every scan produces a complete 3D model of your body, viewable from any angle. Waist, hips, arms, thighs, chest &#8212; every circumference measured and recorded. Not estimated. Measured.</div>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-img-wrap">
+            <img src="images/scan-before-after.png" alt="Before and after 3D body comparison on phone showing progress between two scan dates" width="222" height="376" loading="lazy" />
+          </div>
+          <div class="showcase-caption">
+            <div class="showcase-caption-title">Before &amp; after &#8212; every change tracked</div>
+            <div class="showcase-caption-body">Rescan after your training block and the app generates a side-by-side comparison of every measurement &#8212; body fat %, waist circumference, lean mass. Not how you feel. What the data shows.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="packages" style="background: var(--off-white);">
+    <div class="section-inner">
+      <p class="eyebrow">Packages</p>
+      <h2>Choose your starting point.</h2>
+      <p class="section-lead">Every package leads somewhere. Pick the one that matches where you are right now &#8212; you can always move up the track.</p>
+      <div class="packages-grid">
+        <div class="pkg">
+          <div class="pkg-icon">&#x1F52C;</div>
+          <div class="pkg-name">The Discovery</div>
+          <div class="pkg-tagline">&ldquo;Know your body in 35 seconds.&rdquo;</div>
+          <div class="pkg-price">&#x0E3F;1,500</div>
+          <div class="pkg-unit">single scan</div>
+          <div class="pkg-includes">Includes</div>
+          <ul class="pkg-items">
+            <li>35-second Styku body scan</li>
+            <li>400+ measurements captured</li>
+            <li>3D rotating body avatar</li>
+            <li>Body fat % and lean mass data</li>
+            <li>Full PDF report emailed</li>
+          </ul>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20The%20Discovery%20scan%20for%20%E0%B8%B11%2C500" class="pkg-cta pkg-cta-outline" target="_blank" rel="noopener">Book via WhatsApp</a>
+        </div>
+        <div class="pkg featured">
+          <div class="pkg-icon">&#x1F4CA;</div>
+          <div class="pkg-badge pkg-badge-accent">Best value</div>
+          <div class="pkg-name">The Blueprint</div>
+          <div class="pkg-tagline">&ldquo;Scan in. Train. Prove it worked.&rdquo;</div>
+          <div class="pkg-price">&#x0E3F;2,000</div>
+          <div class="pkg-unit">2 scans &middot; saves &#x0E3F;1,000</div>
+          <div class="pkg-includes">Includes</div>
+          <ul class="pkg-items">
+            <li>Everything in The Discovery &times; 2</li>
+            <li>Before &amp; after comparison report</li>
+            <li>Side-by-side 3D avatar comparison</li>
+            <li>Track real change between sessions</li>
+            <li>No expiry &#8212; use any time</li>
+          </ul>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20The%20Blueprint%20double%20scan%20pack%20for%20%E0%B8%B12%2C000" class="pkg-cta pkg-cta-accent" target="_blank" rel="noopener">Book via WhatsApp</a>
+        </div>
+        <div class="pkg">
+          <div class="pkg-icon">&#x1F3AF;</div>
+          <div class="pkg-badge pkg-badge-muted">Most popular next step</div>
+          <div class="pkg-name">The Kickstart</div>
+          <div class="pkg-tagline">&ldquo;Your data. Your program. Your first results.&rdquo;</div>
+          <div class="pkg-price">&#x0E3F;4,500</div>
+          <div class="pkg-unit">scan + consult + 3 PT sessions</div>
+          <div class="pkg-includes">Includes</div>
+          <ul class="pkg-items">
+            <li>Full Styku body scan + report</li>
+            <li>30-min expert consultation</li>
+            <li>3 personal training sessions</li>
+            <li>Programme built from your scan data</li>
+            <li>Ideal for first-time training clients</li>
+          </ul>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20The%20Kickstart%20package%20for%20%E0%B8%B14%2C500" class="pkg-cta pkg-cta-outline" target="_blank" rel="noopener">Book via WhatsApp</a>
+        </div>
+      </div>
+      <div class="packages-grid-bottom" style="margin-top: 1px;">
+        <div class="pkg featured">
+          <div class="pkg-icon">&#x1F3DD;&#xFE0F;</div>
+          <div class="pkg-badge pkg-badge-accent">For long-stay guests</div>
+          <div class="pkg-name">The Samui Shape-Up</div>
+          <div class="pkg-tagline">&ldquo;Six weeks. Real change. Measured proof.&rdquo;</div>
+          <div class="pkg-price">&#x0E3F;7,500</div>
+          <div class="pkg-unit">double scan + consult + 6 PT sessions</div>
+          <div class="pkg-includes">Includes</div>
+          <ul class="pkg-items">
+            <li>Scan on arrival + scan on completion</li>
+            <li>Full expert consultation</li>
+            <li>6 personal training sessions</li>
+            <li>Programme adjusted mid-block from data</li>
+            <li>Before &amp; after comparison report</li>
+            <li>Built for 4&#8211;8 week Samui stays</li>
+          </ul>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20The%20Samui%20Shape-Up%20package%20for%20%E0%B8%B17%2C500" class="pkg-cta pkg-cta-accent" target="_blank" rel="noopener">Book via WhatsApp</a>
+        </div>
+        <div class="pkg collab">
+          <div class="pkg-icon">&#x1F9D8;</div>
+          <div class="pkg-badge pkg-badge-green">BSS &times; Samui Yoga Therapy</div>
+          <div class="pkg-name">The Full Reset</div>
+          <div class="pkg-tagline">&ldquo;Train the body. Breathe the stress out.&rdquo;</div>
+          <div class="pkg-price">&#x0E3F;9,500</div>
+          <div class="pkg-unit">scan + PT + private yoga &amp; breathwork</div>
+          <div class="pkg-includes">Includes</div>
+          <ul class="pkg-items">
+            <li>Double scan &#8212; before &amp; after</li>
+            <li>Expert consultation</li>
+            <li>3 personal training sessions (BSS)</li>
+            <li>3 private yoga or breathwork sessions (SYT)</li>
+            <li>Body composition + nervous system reset</li>
+            <li>The only integrated offer on Koh Samui</li>
+          </ul>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20The%20Full%20Reset%20package%20for%20%E0%B8%B19%2C500" class="pkg-cta pkg-cta-dark" target="_blank" rel="noopener">Book via WhatsApp</a>
+        </div>
+      </div>
+      <p class="pkg-footnote">Add a standalone consultation to any scan for +&#x0E3F;500 &middot; All packages bookable via WhatsApp &middot; Same-day confirmation</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="section-inner">
+      <p class="eyebrow">What clients say</p>
+      <h2>600 scans on Koh Samui.<br>Real results.</h2>
+      <p class="section-lead">We&#8217;ve been scanning clients on this island for over two years. Here&#8217;s what the experience is actually like.</p>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="testimonial-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          <div class="testimonial-text">&ldquo;I&#8217;ve used InBody machines in gyms for years. This is a completely different level. The 3D avatar made it obvious exactly where my fat is sitting &#8212; not just a percentage, but location. The consultation turned that data into an actual training focus. Nothing vague about it.&rdquo;</div>
+          <div class="testimonial-author">Hotel guest, Fisherman&#8217;s Village</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          <div class="testimonial-text">&ldquo;I&#8217;m a digital nomad &#8212; I travel constantly and train inconsistently. The scan showed 31% body fat, mostly central. Six weeks of scan-programmed training later, I rescanned: 27.4%. The before/after comparison report is something you cannot argue with. That&#8217;s real data.&rdquo;</div>
+          <div class="testimonial-author">Digital nomad, 6-week stay on Samui</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          <div class="testimonial-text">&ldquo;We offer the scan as a wellness add-on for our retreat guests and the feedback has been exceptional. People leave Samui with a report, a plan, and proof of where they started. That&#8217;s a takeaway that outlasts any holiday feeling.&rdquo;</div>
+          <div class="testimonial-author">Retreat operator partner, Koh Samui</div>
+        </div>
+      </div>
+      <div class="reviews-cta">
+        <div>
+          <p class="reviews-cta-title">600+ clients on Koh Samui &#8212; and counting.</p>
+          <p class="reviews-cta-sub">Scanned with us? We&#8217;d love your honest review on Google. It takes two minutes and helps other visitors find us.</p>
+        </div>
+        <a href="YOUR-GOOGLE-REVIEW-LINK" class="btn-outline-dark reviews-btn" target="_blank" rel="noopener">Leave a Google review &#x2192;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <p class="eyebrow">Services</p>
+      <h2>Built around your results.</h2>
+      <p class="section-lead">The scan is the starting point &#8212; not the product. Everything we offer turns your data into real, trackable change.</p>
+      <div>
+        <div class="service-row">
+          <div class="service-index">01</div>
+          <div>
+            <div class="service-name">Styku 3D Body Scan</div>
+            <div class="service-desc">Medical-grade infrared scanning, validated against a DEXA X-ray reference database. The most accurate body composition information on Koh Samui. Single or double pack.</div>
+          </div>
+          <span class="service-pill">From &#x0E3F;1,500</span>
+        </div>
+        <div class="service-row">
+          <div class="service-index">02</div>
+          <div>
+            <div class="service-name">Scan + Consultation</div>
+            <div class="service-desc">A coach walks you through your results and builds a training direction from your data. Added to any scan booking for &#x0E3F;500.</div>
+          </div>
+          <span class="service-pill">+&#x0E3F;500 add-on</span>
+        </div>
+        <div class="service-row">
+          <div class="service-index">03</div>
+          <div>
+            <div class="service-name">Personal Training</div>
+            <div class="service-desc">Body sculpting sessions programmed from your scan data. Progress tracked and adjusted with follow-up scans. Not a generic template.</div>
+          </div>
+          <span class="service-pill">Enquire</span>
+        </div>
+        <div class="service-row">
+          <div class="service-index">04</div>
+          <div>
+            <div class="service-name">Private Yoga Sessions</div>
+            <div class="service-desc">In partnership with Samui Yoga Therapy &#8212; Vinyasa, Yin, or therapeutic yoga. On Koh Samui&#8217;s beaches, at the shala, or at your villa.</div>
+          </div>
+          <span class="service-pill">Enquire</span>
+        </div>
+        <div class="service-row">
+          <div class="service-index">05</div>
+          <div>
+            <div class="service-name">Integrated Wellness Package</div>
+            <div class="service-desc">Scan + personal training + yoga therapy and breathwork. Body and breath working together. The only offer like it on Koh Samui.</div>
+          </div>
+          <span class="service-pill">From &#x0E3F;9,500</span>
+        </div>
+      </div>
+      <div class="yoga-strip">
+        <div>
+          <h3>Looking for private yoga on Koh Samui?</h3>
+          <p>Body Sculpt Samui partners with Samui Yoga Therapy for private Vinyasa, Yin, and therapeutic yoga &#8212; on the beach, at a waterfall, or at your villa.</p>
+        </div>
+        <a href="https://wa.me/66660735431?text=Hi%2C%20I%27m%20interested%20in%20booking%20a%20private%20yoga%20session" class="btn-dark" target="_blank" rel="noopener" style="white-space: nowrap;">Book yoga &#x2192;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOTELS -->
+  <section id="hotels">
+    <div class="section-inner">
+      <div class="hotel-split">
+        <div class="hotel-text">
+          <p class="eyebrow">Hotel &amp; villa partnerships</p>
+          <h2>A wellness amenity your guests will remember.</h2>
+          <p>We work directly with hotels and private villa operators on Koh Samui to bring Styku body scanning and results-driven training on-site. Your guests leave with data, a plan, and a reason to return.</p>
+          <p>Registered contractor with Anantara Lawana and Meli&#225; Koh Samui. On-call and standing program structures available.</p>
+          <div class="hotel-partners">
+            <span class="hotel-partner-pill">Anantara Lawana</span>
+            <span class="hotel-partner-pill">Meli&#225; Koh Samui</span>
+            <span class="hotel-partner-pill">Private villas</span>
+            <span class="hotel-partner-pill">Retreat operators</span>
+          </div>
+          <ul class="hotel-features">
+            <li>On-site Styku scanning for hotel guests</li>
+            <li>Retreat body composition tracking &#8212; scan in, scan out</li>
+            <li>Private yoga and movement sessions</li>
+            <li>On-call and standing programme contracts</li>
+          </ul>
+        </div>
+        <div class="hotel-callout">
+          <div class="hotel-callout-eyebrow">For hotel &amp; villa teams</div>
+          <h3>Let&#8217;s talk about bringing this to your guests.</h3>
+          <p>Whether you&#8217;re looking for a one-off experience or a standing wellness programme, we&#8217;ll structure something that fits your property and your guests.</p>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20I%27m%20interested%20in%20a%20hotel%20partnership%20with%20Body%20Sculpt%20Samui" class="btn-accent" target="_blank" rel="noopener">Start the conversation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-inner">
+      <p class="eyebrow">Common questions</p>
+      <h2>Everything you need to know before you scan.</h2>
+      <p class="section-lead">First time with a 3D body scanner? Here&#8217;s what clients ask most before booking.</p>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What should I wear for the scan? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">Form-fitting shorts and a sports top, or compression wear. The infrared sensors need a clear view of your body shape &#8212; loose clothing creates shadow gaps and reduces the accuracy of your measurements. We can provide modesty wraps if preferred.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How long does the whole appointment take? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">The scan itself is 35 seconds. A scan-only appointment takes around 15&#8211;20 minutes including setup and receiving your emailed report. If you add a consultation, allow 45&#8211;60 minutes total.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Does the Styku scanner use radiation or emit anything harmful? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">No. Styku uses infrared light &#8212; the same technology found in depth cameras and motion capture systems. It is completely safe, non-invasive, and you won&#8217;t feel anything during the scan. There is no ionising radiation of any kind.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How is this more accurate than a BIA machine or InBody scale? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">BIA (Bioelectrical Impedance Analysis) passes a small electrical current through your body and estimates fat from resistance. Results shift significantly based on hydration levels, recent eating, temperature, and time of day &#8212; so the same person can get meaningfully different readings hours apart. Styku uses infrared optical measurement validated against a DEXA reference database. That reading doesn&#8217;t fluctuate with hydration. The two methods are not comparable for accuracy.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What&#8217;s actually included in the PDF report? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">Your report includes: a 3D rotating body avatar viewable from all angles, body fat percentage, lean muscle mass, 400+ circumference measurements (waist, hips, chest, arms, thighs, calves and more), and a full body composition breakdown. If you rescan, the report also generates a side-by-side before and after comparison of every metric.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How often should I rescan to track progress? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">Every 4&#8211;8 weeks. That&#8217;s enough time for meaningful changes in body composition to register clearly in the data. Rescanning sooner than 3 weeks risks the differences falling within normal measurement variance rather than reflecting genuine change.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I scan if I&#8217;m pregnant or have a medical condition? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">We recommend waiting until after pregnancy. If you have implanted medical devices or specific health considerations, please check with your doctor before booking. For everyone else, the scan is safe, non-invasive, and completely painless.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Where are you located, and do you come to hotels? <span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-body">We&#8217;re based on Koh Samui and work directly with hotels and private villas. We&#8217;re registered contractors at Anantara Lawana and Meli&#225; Koh Samui, and can arrange on-site scanning at your property. Message us on WhatsApp with your location and we&#8217;ll work out the details.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="location">
+    <div class="section-inner">
+      <p class="eyebrow">Find us</p>
+      <h2>Based on Koh Samui, Thailand.</h2>
+      <p class="section-lead">We scan at our studio and travel to partner hotels and private villas across the island. Message us on WhatsApp for directions to our exact location.</p>
+      <div class="location-layout">
+        <div class="location-info">
+          <div class="location-detail">
+            <div class="location-detail-label">Island</div>
+            <div class="location-detail-value">Koh Samui, Surat Thani<br>Thailand</div>
+          </div>
+          <div class="location-detail">
+            <div class="location-detail-label">Hotel partners</div>
+            <div class="location-detail-value">Anantara Lawana &middot; Meli&#225; Koh Samui</div>
+          </div>
+          <div class="location-detail">
+            <div class="location-detail-label">Hours</div>
+            <div class="location-detail-value">Mon&#8211;Sat &middot; 9am&#8211;1pm<br>Private training by appointment</div>
+          </div>
+          <div class="location-detail">
+            <div class="location-detail-label">WhatsApp</div>
+            <div class="location-detail-value"><a href="https://wa.me/66660735431">+66 66 073 5431</a></div>
+          </div>
+          <a href="https://wa.me/66660735431?text=Hi%2C%20can%20you%20send%20me%20your%20studio%20location%20on%20Koh%20Samui%3F" class="btn-dark" target="_blank" rel="noopener">Get directions via WhatsApp &#x2192;</a>
+        </div>
+        <div class="location-map">
+          <div class="map-placeholder">
+            <div class="map-placeholder-inner">
+              <span aria-hidden="true">&#x1F4CD;</span>
+              <p>Koh Samui, Thailand</p>
+              <p>Replace this with your Google Maps embed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <p class="eyebrow">Book your scan</p>
+    <h2>Ready to see your numbers?</h2>
+    <p>Your first Styku scan includes your full body composition report. Add a consultation and you&#8217;ll leave with a plan. Book via WhatsApp &#8212; we confirm same day.</p>
+    <div class="contact-actions">
+      <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Styku%20scan" class="btn-dark" target="_blank" rel="noopener">Book via WhatsApp</a>
+      <a href="https://wa.me/66660735431?text=Hi%2C%20I%20have%20a%20question%20about%20Body%20Sculpt%20Samui" class="btn-outline-dark" target="_blank" rel="noopener">Ask a question</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Body Sculpt Samui</span>
+    <div class="footer-links">
+      <a href="#journey">How it works</a>
+      <a href="#packages">Packages</a>
+      <a href="#hotels">Hotels</a>
+      <a href="#faq">FAQ</a>
+      <a href="#location">Location</a>
+    </div>
+    <span>Koh Samui, Thailand &middot; In partnership with Samui Yoga Therapy</span>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/66660735431?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Styku%20scan"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener"
+     aria-label="Chat on WhatsApp to book a scan">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Book via WhatsApp
+  </a>
+
+</body>
+</html>
